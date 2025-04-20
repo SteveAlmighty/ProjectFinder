@@ -1,4 +1,4 @@
-package com.example.projectfinder.projectfinder.presentation
+package com.example.projectfinder.projectfinder.presentation.homescreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

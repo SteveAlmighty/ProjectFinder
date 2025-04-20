@@ -1,4 +1,4 @@
-package com.example.projectfinder.projectfinder.presentation
+package com.example.projectfinder.projectfinder.presentation.createproject
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,6 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.Navigation
+import com.example.projectfinder.projectfinder.presentation.homescreen.Project
 
 // Define the ProjectType enum
 enum class ProjectType {
@@ -20,7 +24,14 @@ enum class ProjectType {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateProjectScreen(onCreateProject: (Project) -> Unit) {
+fun CreateProjectScreen(
+    onCreateProject: (Project) -> Unit,
+    viewModel: CreateProjectViewModel = hiltViewModel(),
+    navigation: Navigation
+) {
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     var title by remember { mutableStateOf(TextFieldValue()) }
     var description by remember { mutableStateOf(TextFieldValue()) }
     var projectType by remember { mutableStateOf(ProjectType.Other) }
@@ -37,16 +48,16 @@ fun CreateProjectScreen(onCreateProject: (Project) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = title,
-            onValueChange = { title = it },
+            value = state.title,
+            onValueChange = { viewModel.setTitle(it) },
             label = { Text("Project Title") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
+            value = state.description,
+            onValueChange = {viewModel.setDescription(it) },
             label = { Text("Description") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -62,7 +73,7 @@ fun CreateProjectScreen(onCreateProject: (Project) -> Unit) {
             OutlinedTextField(
                 readOnly = true,
                 value = projectType.name,
-                onValueChange = {},
+                onValueChange = {viewModel.setType(it)},
                 label = { Text("Project Type") },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier.menuAnchor().fillMaxWidth()
@@ -85,8 +96,8 @@ fun CreateProjectScreen(onCreateProject: (Project) -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = members,
-            onValueChange = { members = it },
+            value = state.teamMembers,
+            onValueChange = { viewModel.setTeamMembers(it)},
             label = { Text("Number of Members") },
             modifier = Modifier.fillMaxWidth(),
             // Consider adding keyboard options for numeric input
@@ -118,8 +129,8 @@ fun CreateProjectScreen(onCreateProject: (Project) -> Unit) {
 // Update the Project data class to make fields mutable:
 
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun CreateProjectScreenPreview() {
     CreateProjectScreen(onCreateProject = { /* Handle project creation in preview */ })
-}
+} */
