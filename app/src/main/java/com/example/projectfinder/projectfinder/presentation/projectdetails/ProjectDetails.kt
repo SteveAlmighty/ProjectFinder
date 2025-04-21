@@ -1,4 +1,4 @@
-package com.example.projectfinder.projectfinder.presentation
+package com.example.projectfinder.projectfinder.presentation.projectdetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.projectfinder.projectfinder.presentation.homescreen.Project
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
